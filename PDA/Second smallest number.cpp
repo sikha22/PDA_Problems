@@ -10,49 +10,48 @@ class Solution{
   public:
     string secondSmallest(int S, int D){
         // code here 
-         if(S >= 9 * D) return "-1";
-        
-        int smallest = 0;
-        for(int i = 0; i < D; i++) {
-            int maxS = 9 * (D - 1 - i);
-            int val = 0;
-            if(i == 0) val = 1;
-            if(S - maxS > 0) {
-                val = S - maxS;
-            }
-            
-            S -= val;
-            smallest = smallest * 10 + val;
-        }
-        
-        // cout << smallest << endl;
-        
-        int secondSmallest = 0;
-        int cnt = 0;
-        while(1) {
-            if(cnt >= D - 1) break;
-            
-            int ld = smallest % 10;
-            smallest /= 10;
-            int sld = smallest % 10;
-            
-            if(sld != 9) {
-                sld++;
-                ld--;
-                smallest /= 10;
-                secondSmallest = smallest * pow(10, cnt + 2) + 
-                                 sld * pow(10, cnt + 1) + 
-                                 ld * pow(10, cnt) + 
-                                 secondSmallest;
-                break;
-                
-            } else {
-                secondSmallest = ld * pow(10, cnt) + secondSmallest;
-                cnt++;
-            }
-        }
-        
-        return to_string(secondSmallest);
+        if(S==1 || D==1) return "-1";
+         if(S>9*D) return "-1";
+         if(S==9*D) return "-1";
+         
+         string ans(D,'0');
+         int sum=S;
+         int last=-1;
+         
+         // First Smallest Number
+         for(int i=D-1;i>=0;i--)
+         {
+             if(sum>9)
+             {
+                 ans[i]='9';
+                 sum-=9;
+             }
+             else if(sum>0)
+             {
+                 ans[i]='0'+sum;
+                 last=i;
+                 sum=0;
+             }
+             else
+             {
+                 ans[i]='0';
+             }
+         }
+         
+         if(ans[0]=='0')
+         {
+             ans[0]='1';
+             ans[last]-=1;
+         }
+         
+         // Second Smallest Number
+         int l=D-2;
+         while(ans[l]=='9') l--;
+         
+         ans[l]+=1;
+         ans[l+1]-=1;
+         
+         return ans;
     }
 };
 
