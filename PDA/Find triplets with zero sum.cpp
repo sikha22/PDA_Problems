@@ -20,16 +20,18 @@ class Solution{
             int a = i+1;
             int b = n-1;
             while(a<b){
-                if(arr[a]+arr[b]+arr[i]==0){
+                int sum = arr[a]+arr[b]+arr[i];
+                if(sum==0){
                     return true;
-                }else if(arr[a]+arr[b]+arr[i]<0){
+                }else if(sum<0){
                     a++;
                 }else{
                     b--;
                 }
             }
-            return false;
+          
         }
+          return false;
     }
 };
 
